@@ -4,7 +4,6 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 
-# 1. Деректер жиынтығын құру (24 жол)
 data = {
     'ID': list(range(1, 25)),
     'Vibration': [
@@ -116,7 +115,6 @@ data = {
 
 df = pd.DataFrame(data)
 
-# 2. Оқыту (ID 1–18) және Тестілеу (ID 19–24) жиындарына бөлу
 features = ['Vibration', 'Slip', 'SurfaceGrip', 'ObstacleRate']
 
 X_train = df.iloc[:18][features]
@@ -126,7 +124,6 @@ X_test = df.iloc[18:][features]
 y_test = df.iloc[18:]['Stable']
 test_ids = df.iloc[18:]['ID'].values
 
-# 3. Алдын ала өңдеу (Нормализация / Масштабтау)
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
@@ -136,14 +133,12 @@ dt_model = DecisionTreeClassifier(random_state=42)
 dt_model.fit(X_train, y_train)
 dt_preds = dt_model.predict(X_test)
 
-# 5. Нейрондық желі (MLPClassifier)
 nn_model = MLPClassifier(
     hidden_layer_sizes=(8,), solver='lbfgs', max_iter=1000, random_state=42
 )
 nn_model.fit(X_train_scaled, y_train)
 nn_preds = nn_model.predict(X_test_scaled)
 
-# 6. Метрикалар мен қателер матрицасын басып шығару
 print('--- Базалық модель (Decision Tree) ---')
 print('Accuracy:', accuracy_score(y_test, dt_preds))
 print('Confusion Matrix:\n', confusion_matrix(y_test, dt_preds, labels=[1, 0]))
@@ -152,7 +147,6 @@ print('\n--- Нейрондық желі (MLPClassifier) ---')
 print('Accuracy:', accuracy_score(y_test, nn_preds))
 print('Confusion Matrix:\n', confusion_matrix(y_test, nn_preds, labels=[1, 0]))
 
-# 7. Тест ID (19–24) бойынша қателерді талдау кестесін шығару
 results = []
 for idx, t_id, actual, dt_p, nn_p in zip(
     range(len(test_ids)), test_ids, y_test, dt_preds, nn_preds
