@@ -128,7 +128,6 @@ scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-# 4. Базалық модель (Decision Tree)
 dt_model = DecisionTreeClassifier(random_state=42)
 dt_model.fit(X_train, y_train)
 dt_preds = dt_model.predict(X_test)
