@@ -3,7 +3,7 @@ from sklearn.metrics import accuracy_score, f1_score
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 
-# Данные
+
 data = {
     'Vibration': [
         0.20,
@@ -119,7 +119,7 @@ y_train = df.iloc[:18]['Stable']
 X_test = df.iloc[18:][['Vibration', 'Slip', 'SurfaceGrip', 'ObstacleRate']]
 y_test = df.iloc[18:]['Stable']
 
-# Масштабирование
+
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
